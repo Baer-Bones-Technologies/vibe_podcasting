@@ -42,7 +42,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
           path: LoginScreen.routeLocation,
           name: LoginScreen.routeName,
-          builder: (_, __) => const LoginScreen()),
+          builder: (_, __) => LoginScreen()),
       GoRoute(
           path: RegisterScreen.routeLocation,
           name: RegisterScreen.routeName,

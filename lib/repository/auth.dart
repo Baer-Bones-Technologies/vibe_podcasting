@@ -34,4 +34,19 @@ class AuthRepository{
 Future<void> signOut() async {
     await _auth.signOut();
   }
+
+  validateEmailPassword(String email, String password) {
+    final alphanumeric = RegExp(r'^[a-zA-Z0-9!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]+$');
+    if (email.isEmpty || password.isEmpty) {
+      throw Exception('Email and password are required');
+    }
+    final emailPattern = RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+');
+    if(!email.contains('@')|| !emailPattern.hasMatch(email) ){
+      throw Exception('Invalid email');
+    }
+    if(!alphanumeric.hasMatch(password) || password.length < 6 ){
+      throw Exception('Password must be at least 6 characters, and contain only letters, numbers, and special characters\n e.g. @, #, !, etc.');
+    }
+    return true;
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vibe_podcasting/models/content_preferences.dart';
 import 'package:vibe_podcasting/models/download_preferences.dart';
 import 'package:vibe_podcasting/models/notification_preferences.dart';
@@ -20,10 +21,13 @@ class AuthManager {
     required String email,
     required String password,
   }) async {
-    final user =
-        await _authRepository.signInWithEmailAndPassword(email, password);
+    User? user;
     VibeUser? vibeUser;
     try {
+      _authRepository.validateEmailPassword(email, password);
+      user =
+        await _authRepository.signInWithEmailAndPassword(email, password);
+    VibeUser? vibeUser;
       _firestore.collection('users').doc(user!.uid).get().then((value) {
         if (value.exists) {
           vibeUser = VibeUser.fromJson(value.data()!);
@@ -43,6 +47,7 @@ class AuthManager {
     required String username,
   }) async {
     try {
+      _authRepository.validateEmailPassword(email, password);
       final user =
           await _authRepository.signUpWithEmailAndPassword(email, password);
 
