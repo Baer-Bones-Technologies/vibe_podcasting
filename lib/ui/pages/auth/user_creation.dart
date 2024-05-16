@@ -103,7 +103,7 @@ class _UserCreationScreenState extends ConsumerState<UserCreationScreen> {
                   await authController
                       .createVibeUserFile(
                         firebaseAuth.currentUser,
-                        photoUri: imagePreview!.path,
+                        photoUri: imagePreview,
                         over13: over13,
                         username: username,
                       )
