@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:vibe_podcasting/initialize_application.dart';
-import 'package:vibe_podcasting/providers/theme_provider.dart';
-import 'package:vibe_podcasting/router/router.dart';
+
+import 'constants/config/initialize_application.dart';
+import 'src/router/router.dart';
+import 'ui/providers/theme_provider.dart';
 
 void main() async {
   await runZonedGuarded(() async {
