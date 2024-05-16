@@ -8,10 +8,6 @@ part of 'user_preferences.dart';
 
 UserPreferences _$UserPreferencesFromJson(Map<String, dynamic> json) =>
     UserPreferences(
-      birthday: json['birthday'] == null
-          ? null
-          : DateTime.parse(json['birthday'] as String),
-      age: (json['age'] as num?)?.toInt() ?? 13,
       contentPreferences: json['contentPreferences'] == null
           ? const ContentPreferences(downloadPreferences: DownloadPreferences())
           : ContentPreferences.fromJson(
@@ -25,13 +21,13 @@ UserPreferences _$UserPreferencesFromJson(Map<String, dynamic> json) =>
           : PlaybackPreferences.fromJson(
               json['playbackPreferences'] as Map<String, dynamic>),
       profilePicture: json['profilePicture'] as String? ?? '',
+      username: json['username'] as String,
     );
 
 Map<String, dynamic> _$UserPreferencesToJson(UserPreferences instance) =>
     <String, dynamic>{
-      'birthday': instance.birthday?.toIso8601String(),
-      'age': instance.age,
       'profilePicture': instance.profilePicture,
+      'username': instance.username,
       'contentPreferences': instance.contentPreferences.toJson(),
       'notificationPreferences': instance.notificationPreferences.toJson(),
       'playbackPreferences': instance.playbackPreferences.toJson(),

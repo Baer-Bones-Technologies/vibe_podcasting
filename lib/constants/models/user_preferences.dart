@@ -13,17 +13,15 @@ part 'user_preferences.g.dart';
 class UserPreferences {
   const UserPreferences(
       {
-      this.birthday,
-      this.age = 13,
       this.contentPreferences = const ContentPreferences(downloadPreferences: DownloadPreferences()),
       this.notificationPreferences = const NotificationPreferences(),
       this.playbackPreferences = const PlaybackPreferences(),
-      this.profilePicture = ''
+      this.profilePicture = '',
+      required this.username,
       });
 
-  final DateTime? birthday;
-  final int age;
   final String profilePicture;
+  final String username;
   final ContentPreferences contentPreferences;
   final NotificationPreferences notificationPreferences;
   final PlaybackPreferences playbackPreferences;

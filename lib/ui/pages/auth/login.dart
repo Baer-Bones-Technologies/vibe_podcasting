@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vibe_podcasting/ui/pages/home.dart';
 
 import '../../../constants/strings.dart';
 import '../../providers/auth_provider.dart';
@@ -20,9 +21,13 @@ class LoginScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authController = ref.watch(authManagerProvider);
+    errorMessage(Object e) => SnackBar(
+          content: Text(e.toString()),
+          backgroundColor: Theme.of(context).colorScheme.error,
+        );
 
     return RegistrationScaffold(
-          form: Column(
+      form: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -79,19 +84,29 @@ class LoginScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   final email = _emailController.value.text;
                   final password = _passwordController.value.text;
                   try {
-                    authController.signInWithEmailAndPassword(
-                        email: email, password: password);
+                    await authController
+                        .signInWithEmailAndPassword(
+                            email: email, password: password)
+                        .then((value) {
+                      if (value != null) {
+                        ref.read(vibeUserProvider.notifier).state = value;
+                        context.go(HomePage.routeLocation);
+                      }
+                    });
                   } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(e.toString()),
-                        backgroundColor: Theme.of(context).colorScheme.error,
-                      ),
-                    );
+                    context.mounted
+                        ? ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(e.toString()),
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.error,
+                            ),
+                          )
+                        : errorMessage(e);
                   }
                 },
                 style: ButtonStyle(
@@ -166,7 +181,7 @@ class LoginScreen extends ConsumerWidget {
             ],
           ),
         ],
-    ),
+      ),
     );
   }
 }

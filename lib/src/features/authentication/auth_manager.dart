@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../constants/models/user_preferences.dart';
 import '../../../constants/models/vibe_user.dart';
-import '../../repository/auth.dart';
+import '../../repository/auth_repo.dart';
 
 class AuthManager {
   AuthManager(
@@ -16,6 +17,7 @@ class AuthManager {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   VibeUser? _currentUser;
   VibeUser? get currentUser => _currentUser;
+  int ageCheck = 0;
 
   signInWithEmailAndPassword({
     required String email,
@@ -69,36 +71,31 @@ class AuthManager {
   }
 
   Future<VibeUser?> createVibeUserFile(
-    User user, {
-    required DateTime birthday,
+    User? user, {
+    required bool over13,
     required String photoUri,
+        required String username,
   }) async {
-    int age;
-
-    if (birthday.compareTo(DateTime.now()) > 0) {
-      throw Exception('Birthday cannot be in the future');
-    }
-    if (birthday.compareTo(
-            DateTime.now().subtract(const Duration(days: 365 * 13))) >
-        0) {
-      throw Exception('Must be older than 13 years to use this app');
-    } else {
-      age = DateTime.now().year - birthday.year;
-      age = birthday.month > DateTime.now().month ? age - 1 : age;
-    }
-
+    if(!over13){
+      if(ageCheck == 0){
+        ageCheck++;
+      throw Exception('Must be over the age of 13 to join.');
+    }else if(ageCheck == 2){
+        // make the account as a TOO YOUNG Account and give access after aging
+        throw Exception('Must be over the age of 13 to join.');
+      }
+      }
     final UserPreferences userPreferences = UserPreferences(
-      birthday: birthday,
-      age: age,
       profilePicture: photoUri,
+      username: username,
     );
 
     final VibeUser vibeUser = VibeUser(
-      email: user.email!,
-      id: user.uid,
+      email: user?.email ?? '',
+      id: user?.uid ?? '',
       userPreferences: userPreferences,
     );
-    await _firestore.collection('users').doc(user.uid).set(vibeUser.toJson());
+    await _firestore.collection('Users').doc(user?.uid).set(vibeUser.toJson());
     return vibeUser;
   }
 

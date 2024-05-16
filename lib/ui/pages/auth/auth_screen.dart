@@ -17,6 +17,7 @@ class AuthScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeData = ref.watch(themeProvider.notifier);
     return RegistrationScaffold(
+      height: 0.4,
         form: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
