@@ -9,16 +9,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'firebase_options.dart';
 
-class Bootstrapper{
+class Bootstrapper {
   final _home = 'localhost';
-  Future<ProviderContainer> initialize() async{
+  Future<ProviderContainer> initialize() async {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    if(kDebugMode){
-      try{
+    if (kDebugMode) {
+      try {
         FirebaseFirestore.instance.useFirestoreEmulator(_home, 8080);
         FirebaseAuth.instance.useAuthEmulator(_home, 9099);
         FirebaseStorage.instance.useStorageEmulator(_home, 9199);
@@ -29,8 +29,7 @@ class Bootstrapper{
       }
     }
 
-
-    final container  = ProviderContainer();
+    final container = ProviderContainer();
     return container;
   }
 }

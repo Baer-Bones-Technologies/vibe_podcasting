@@ -59,9 +59,16 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: CameraPreview.routeLocation,
         name: CameraPreview.routeName,
-        builder: (_, state) => CameraPreview(returnPath: state.extra as String,),
+        builder: (_, state) => CameraPreview(
+          returnPath: state.extra as String,
+        ),
       ),
-      GoRoute(path: PhotoPreview.routeLocation, name: PhotoPreview.routeName, builder: (_, state) => PhotoPreview(returnPath: state.extra as String,)),
+      GoRoute(
+          path: PhotoPreview.routeLocation,
+          name: PhotoPreview.routeName,
+          builder: (_, state) => PhotoPreview(
+                returnPath: state.extra as String,
+              )),
     ],
     redirect: (context, state) {
       /// if the authentication state is loading or has an error, return null, if over a certain time, redirect to error page
@@ -74,12 +81,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       final isRegister = state.matchedLocation == RegisterScreen.routeLocation;
 
       if (isSplash) {
-        Future.delayed(const Duration(seconds: 5));
         return isVibeAuth ? HomePage.routeLocation : AuthScreen.routeLocation;
       }
 
       if (isRegister) {
-        return isAuth ? UserCreationScreen.routeLocation: null;
+        return isAuth ? UserCreationScreen.routeLocation : null;
       }
       return null;
     },
