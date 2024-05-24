@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vibe_podcasting/constants/domain/storage_path.dart';
 import 'package:vibe_podcasting/src/features/database/database_manager.dart';
 
@@ -23,7 +24,7 @@ class AuthManager {
   VibeUser? get currentUser => _currentUser;
   int ageCheck = 0;
 
-  signInWithEmailAndPassword({
+  Future<VibeUser?> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -32,7 +33,10 @@ class AuthManager {
     try {
       _authRepository.validateEmailPassword(email, password);
       user = await _authRepository.signInWithEmailAndPassword(email, password);
-      _firestore.collection('users').doc(user!.uid).get().then((value) {
+      if(user == null) {
+        throw Exception('User not found');
+      }
+      await _firestore.collection('users').doc(user.uid).get().then((value) {
         if (value.exists) {
           vibeUser = VibeUser.fromJson(value.data()!);
         }
@@ -109,5 +113,23 @@ class AuthManager {
   void signOut(WidgetRef ref) {
     _authRepository.signOut(ref);
     _currentUser = null;
+    deleteUser();
+  }
+
+  loadUser() async {
+    if(_authRepository.currentUser != null) {
+      await _firestore.collection('Users').doc(_authRepository.currentUser.uid).get().then((value) {
+        if (value.exists) {
+          return VibeUser.fromJson(value.data() ?? {});
+        }
+      });
+    }
+  }
+
+void deleteUser() {
+    final prefs = SharedPreferences.getInstance();
+    prefs.then((value) {
+      value.remove('user');
+    });
   }
 }

@@ -9,6 +9,7 @@ class AuthRepository{
   const AuthRepository(this._auth,);
 
   final FirebaseAuth _auth;
+  get currentUser => FirebaseAuth.instance.currentUser;
 
   Future<User?> signInWithEmailAndPassword(String email, String password) async {
     try {

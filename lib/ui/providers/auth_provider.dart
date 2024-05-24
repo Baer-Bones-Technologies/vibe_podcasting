@@ -19,4 +19,4 @@ final authManagerProvider = Provider<AuthManager>((ref) => AuthManager(
 final firebaseAuthProvider =
     Provider<FirebaseAuth>((ref) => FirebaseAuth.instance);
 
-final vibeUserProvider = StateProvider<VibeUser?>((ref) => null);
+final StateProvider<VibeUser?> vibeUserProvider = StateProvider<VibeUser?>((ref) => null);

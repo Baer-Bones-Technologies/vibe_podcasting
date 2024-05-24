@@ -6,7 +6,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vibe_podcasting/src/features/authentication/auth_manager.dart';
+import 'package:vibe_podcasting/ui/providers/auth_provider.dart';
 
+import '../../src/features/database/database_manager.dart';
+import '../../src/repository/auth_repo.dart';
+import '../../src/repository/database_repo.dart';
+import '../../ui/providers/database_provider.dart';
 import 'firebase_options.dart';
 
 class Bootstrapper {
@@ -29,7 +35,22 @@ class Bootstrapper {
       }
     }
 
-    final container = ProviderContainer();
+    final container = ProviderContainer(overrides: [
+      databaseRepositoryProvider.overrideWith((ref) => DatabaseRepository()),
+      databaseManagerProvider.overrideWith(
+          (ref) => DatabaseManager(ref.read(databaseRepositoryProvider))),
+      firebaseAuthProvider.overrideWith((ref) => FirebaseAuth.instance),
+      authStateProvider.overrideWith(
+          (ref) => ref.watch(firebaseAuthProvider).authStateChanges()),
+      authManagerProvider.overrideWith((ref) => AuthManager(
+            AuthRepository(
+              ref.read(firebaseAuthProvider),
+            ),
+            ref.read(databaseManagerProvider),
+          )),
+      vibeUserProvider
+          .overrideWith((ref) => ref.read(authManagerProvider).loadUser()),
+    ]);
     return container;
   }
 }

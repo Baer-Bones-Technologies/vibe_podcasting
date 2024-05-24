@@ -21,8 +21,13 @@ class LoginScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authController = ref.watch(authManagerProvider);
+
     errorMessage(Object e) => SnackBar(
-          content: Text(e.toString()),
+          content: Text(e.toString(),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(color: Theme.of(context).colorScheme.onError)),
           backgroundColor: Theme.of(context).colorScheme.error,
         );
 
@@ -33,8 +38,9 @@ class LoginScreen extends ConsumerWidget {
         children: [
           Text(loginLabel,
               style: GoogleFonts.poppins(
-                  textStyle: Theme.of(context).textTheme.displayLarge,
-                  color: Colors.black)),
+                textStyle: Theme.of(context).textTheme.displayLarge,
+                color: Theme.of(context).colorScheme.onPrimary,
+              )),
           Text(
             loginTagLine,
             style: Theme.of(context).textTheme.bodySmall,
@@ -95,7 +101,7 @@ class LoginScreen extends ConsumerWidget {
                       if (value != null) {
                         ref.read(vibeUserProvider.notifier).state = value;
                         context.go(HomePage.routeLocation);
-                      }
+                                            }
                     });
                   } catch (e) {
                     context.mounted

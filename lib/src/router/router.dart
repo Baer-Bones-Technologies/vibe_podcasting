@@ -10,14 +10,12 @@ import '../../ui/pages/auth/register.dart';
 import '../../ui/pages/auth/user_creation.dart';
 import '../../ui/pages/home.dart';
 import '../../ui/pages/splash.dart';
-import '../../ui/providers/auth_provider.dart';
 import '../../ui/themes/pages/example.dart';
 
 final _key = GlobalKey<NavigatorState>();
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final authState = ref.watch(authStateProvider);
-  final vibeUserState = ref.watch(vibeUserProvider);
+
   return GoRouter(
     navigatorKey: _key,
     debugLogDiagnostics: true,
@@ -70,24 +68,5 @@ final routerProvider = Provider<GoRouter>((ref) {
                 returnPath: state.extra as String,
               )),
     ],
-    redirect: (context, state) {
-      /// if the authentication state is loading or has an error, return null, if over a certain time, redirect to error page
-      if (authState.isLoading || authState.hasError) return null;
-
-      final isAuth = authState.valueOrNull != null;
-      final isVibeAuth = vibeUserState != null;
-
-      final isSplash = state.matchedLocation == SplashScreen.routeLocation;
-      final isRegister = state.matchedLocation == RegisterScreen.routeLocation;
-
-      if (isSplash) {
-        return isVibeAuth ? HomePage.routeLocation : AuthScreen.routeLocation;
-      }
-
-      if (isRegister) {
-        return isAuth ? UserCreationScreen.routeLocation : null;
-      }
-      return null;
-    },
   );
 });

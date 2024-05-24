@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'listening_history.dart';
@@ -33,6 +34,16 @@ class VibeUser{
   Map<String, dynamic> toJson() => _$VibeUserToJson(
         this,
       );
+
+  static Future<VibeUser?> getUser(String? uid) async {
+    final database = FirebaseFirestore.instance;
+    final user = await database.collection('users').doc(uid).get();
+    if (user.exists) {
+      return VibeUser.fromJson(user.data()!);
+    } else {
+      return null;
+    }
+  }
 }
 
 

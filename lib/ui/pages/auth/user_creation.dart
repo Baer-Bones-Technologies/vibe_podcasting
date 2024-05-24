@@ -87,11 +87,7 @@ class _UserCreationScreenState extends ConsumerState<UserCreationScreen> {
                     onChanged: (value) {
                       //ignore: avoid_print
                       print(value);
-                      ref.read(over13Provider.notifier).state = value!;
-                      usernameController.value =
-                          usernameController.value.copyWith(
-                        text: usernameController.value.text,
-                      );
+                      ref.read(over13Provider.notifier).state = value ?? false;
                     }),
                 const Text('I am over 13 years old'),
               ],

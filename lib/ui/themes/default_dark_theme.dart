@@ -3,80 +3,110 @@ import 'package:google_fonts/google_fonts.dart';
 
 ThemeData defaultDarkTheme = ThemeData(
   brightness: Brightness.dark,
-  primaryColor: const Color(0xFFE6AA68),
-  primaryColorLight: const Color(0xFFFA7C2E),
-  primaryColorDark: const Color(0xFFFA7C2E),
-  canvasColor: const Color(0xff090c08),
-  scaffoldBackgroundColor: const Color(0xff090c08),
-  cardColor: const Color(0xff090c08),
-  dividerColor: const Color(0xFFBDBDBD),
-  focusColor: const Color(0xFFFA7C2E),
-  hoverColor: const Color(0xFFFA7C2E),
-  highlightColor: const Color(0xFFFA7C2E),
-  splashColor: const Color(0xFFFA7C2E),
-  unselectedWidgetColor: const Color(0xFFFFFFFF),
-  disabledColor: const Color(0xFFFA7C2E),
-  secondaryHeaderColor: const Color(0xFFFA7C2E),
-  textSelectionTheme: const TextSelectionThemeData(
-    selectionColor: Color(0xFFFA7C2E),
-    cursorColor: Color(0xFFFA7C2E),
-    selectionHandleColor: Color(0xFFFA7C2E),
-  ),
-  dialogBackgroundColor: const Color(0xff090c08),
-  indicatorColor: const Color(0xFFFA7C2E),
-  hintColor: const Color(0xFFFA7C2E),
-  toggleButtonsTheme: const ToggleButtonsThemeData(
-    color: Color(0xFFFA7C2E),
-    selectedColor: Color(0xFFFA7C2E),
-    fillColor: Color(0xFFFA7C2E),
-    focusColor: Color(0xFFFA7C2E),
-    highlightColor: Color(0xFFFA7C2E),
-    hoverColor: Color(0xFFFA7C2E),
-    splashColor: Color(0xFFFA7C2E),
-    borderColor: Color(0xFFFA7C2E),
-    selectedBorderColor: Color(0xFFFA7C2E),
-  ),
   colorScheme: const ColorScheme(
-    primary: Color(0xFFFF8C42),
+    primaryContainer: Color(0xFF191919),
+    primary: Color(0xFFFA7C2E),
     secondary: Color(0xFFFA7C2E),
-    surface: Color(0xff090c08),
-    error: Color(0xFFA23E48),
-    onPrimary: Color(0xff090c08),
-    onSecondary: Color(0xFFFFFFFF),
-    onSurface: Color(0xFFFFFFFF),
-    onError: Color(0xff090c08),
+    surface: Color(0xFF191919),
+    error: Color(0xFFB00020),
+    onPrimary: Color(0xFFCECECE),
+    onSecondary: Color(0xFFCECECE),
+    onSurface: Color(0xFFCECECE),
+    onError: Color(0xFFCECECE),
     brightness: Brightness.dark,
   ),
   textTheme: TextTheme(
-    displayLarge: GoogleFonts.poppins(
-      fontSize: 34,
+    displayLarge: GoogleFonts.climateCrisis(
+      fontSize: 48,
       fontWeight: FontWeight.bold,
-      color: const Color(0xFFFFFFFF),
+      color: const Color(0xFFFF8C42),
     ),
     displayMedium: GoogleFonts.poppins(
       fontSize: 24,
       fontWeight: FontWeight.bold,
-      color: const Color(0xFFFFFFFF),
+      color: const Color(0xFFCECECE),
     ),
-    displaySmall:  GoogleFonts.poppins(
+    displaySmall: GoogleFonts.poppins(
       fontSize: 18,
       fontWeight: FontWeight.bold,
-      color: const Color(0xFFFFFFFF),
+      color: const Color(0xFFCECECE),
     ),
-    bodyLarge:  GoogleFonts.poppins(
+    bodyLarge: GoogleFonts.poppins(
       fontSize: 16,
       fontWeight: FontWeight.normal,
-      color: const Color(0xFFFFFFFF),
+      color: const Color(0xFFCECECE),
     ),
     bodyMedium: GoogleFonts.poppins(
       fontSize: 14,
       fontWeight: FontWeight.normal,
-      color: const Color(0xFFFFFFFF),
+      color: const Color(0xFFCECECE),
     ),
     bodySmall: GoogleFonts.poppins(
       fontSize: 12,
       fontWeight: FontWeight.normal,
-      color: const Color(0xFFFFFFFF),
+      color: const Color(0xFFCECECE),
+    ),
+    labelSmall: GoogleFonts.poppins(
+      fontSize: 10,
+      fontWeight: FontWeight.normal,
+      color: const Color(0xFFCECECE),
+    ),
+    labelMedium: GoogleFonts.poppins(
+      fontSize: 12,
+      fontWeight: FontWeight.normal,
+      color: const Color(0xFFCECECE),
+    ),
+    labelLarge: GoogleFonts.poppins(
+      fontSize: 14,
+      fontWeight: FontWeight.normal,
+      color: const Color(0xFFCECECE),
+    ),
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      elevation: WidgetStateProperty.all<double>(0),
+      backgroundColor: WidgetStateProperty.all<Color?>(const Color(0xFFFA7C2E)),
+      foregroundColor: WidgetStateProperty.all<Color>(const Color(0xFFFFFFFF)),
+      textStyle: WidgetStateProperty.all<TextStyle>(GoogleFonts.poppins(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      )),
+      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+        const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+      ),
+      shape: WidgetStateProperty.all<OutlinedBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+    ),
+  ),
+  outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all<Color?>(const Color(0x00FFFFFF)),
+        foregroundColor: WidgetStateProperty.all<Color?>(const Color(0xFFFA7C2E)),
+        shape: WidgetStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        )),
+        side: WidgetStateProperty.all(
+          const BorderSide(
+            color: Color(0xFFFA7C2E),
+            width: 2,
+          ),
+        ),
+        textStyle: WidgetStateProperty.all(GoogleFonts.poppins(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        )),
+      )),
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: WidgetStateProperty.all<Color?>(const Color(0x00FFFFFF)),
+      foregroundColor: WidgetStateProperty.all<Color?>(const Color(0xFFFA7C2E)),
+      textStyle: WidgetStateProperty.all<TextStyle>(GoogleFonts.poppins(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      )),
     ),
   ),
 );
