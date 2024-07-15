@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vibe_podcasting/ui/pages/home.dart';
 
 import '../../../constants/strings.dart';
-import '../../providers/auth_provider.dart';
+import '../../../di/providers/auth_provider.dart';
+import '../home.dart';
 import '../templates/registration.dart';
 import 'auth_screen.dart';
 import 'register.dart';
@@ -101,7 +101,7 @@ class LoginScreen extends ConsumerWidget {
                       if (value != null) {
                         ref.read(vibeUserProvider.notifier).state = value;
                         context.go(HomePage.routeLocation);
-                                            }
+                      }
                     });
                   } catch (e) {
                     context.mounted

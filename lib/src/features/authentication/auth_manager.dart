@@ -4,12 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vibe_podcasting/constants/domain/storage_path.dart';
-import 'package:vibe_podcasting/src/features/database/database_manager.dart';
 
+import '../../../constants/domain/storage_path.dart';
 import '../../../constants/models/user_preferences.dart';
 import '../../../constants/models/vibe_user.dart';
 import '../../repository/auth_repo.dart';
+import '../database/database_manager.dart';
 
 class AuthManager {
   AuthManager(

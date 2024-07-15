@@ -6,7 +6,7 @@ service cloud.firestore {
       allow read, write: if request.auth.uid == userId;
   }
     match /{document=**} {
-      allow read, write: if request.time < timestamp.date(2024, 8, 16);
+      allow read, write: if request.time < timestamp.date(2024, 12, 30);
     }
   }
 }

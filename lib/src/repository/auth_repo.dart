@@ -2,7 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../ui/providers/auth_provider.dart';
+import '../../di/providers/auth_provider.dart';
+
 
 
 class AuthRepository{

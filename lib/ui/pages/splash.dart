@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:vibe_podcasting/constants/models/vibe_user.dart';
 import 'package:vibe_podcasting/ui/pages/auth/auth_screen.dart';
 import 'package:vibe_podcasting/ui/pages/auth/user_creation.dart';
-import 'package:vibe_podcasting/ui/providers/auth_provider.dart';
+
+import '../../di/providers/auth_provider.dart';
 
 class SplashScreen extends ConsumerWidget {
   const SplashScreen({super.key});

@@ -4,9 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'constants/config/initialize_application.dart';
+import 'config/initialize_application.dart';
+import 'di/providers/theme_provider.dart';
 import 'src/router/router.dart';
-import 'ui/providers/theme_provider.dart';
 
 void main() async {
   await runZonedGuarded(() async {

@@ -6,13 +6,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:vibe_podcasting/src/features/authentication/auth_manager.dart';
-import 'package:vibe_podcasting/ui/providers/auth_provider.dart';
 
 import '../../src/features/database/database_manager.dart';
 import '../../src/repository/auth_repo.dart';
 import '../../src/repository/database_repo.dart';
-import '../../ui/providers/database_provider.dart';
+import '../di/providers/auth_provider.dart';
+import '../di/providers/database_provider.dart';
+import '../src/features/authentication/auth_manager.dart';
 import 'firebase_options.dart';
 
 class Bootstrapper {

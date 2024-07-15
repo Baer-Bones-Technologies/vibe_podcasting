@@ -4,11 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vibe_podcasting/ui/pages/camera/camera_preview.dart';
-import 'package:vibe_podcasting/ui/pages/home.dart';
 
-import '../../providers/auth_provider.dart';
-import '../../providers/camera_providers.dart';
+import '../../../di/providers/auth_provider.dart';
+import '../../../di/providers/camera_providers.dart';
+import '../camera/camera_preview.dart';
+import '../home.dart';
 import 'auth_screen.dart';
 
 class UserCreationScreen extends ConsumerStatefulWidget {

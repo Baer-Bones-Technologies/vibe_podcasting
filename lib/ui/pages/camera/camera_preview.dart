@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vibe_podcasting/ui/pages/camera/photo_preview.dart';
-import 'package:vibe_podcasting/ui/providers/camera_providers.dart';
+
+import '../../../di/providers/camera_providers.dart';
+import 'photo_preview.dart';
 
 class CameraPreview extends ConsumerStatefulWidget {
   const CameraPreview({super.key, this.returnPath = ''});

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../constants/strings.dart';
-import '../../providers/theme_provider.dart';
+import '../../../di/providers/theme_provider.dart';
 import '../templates/registration.dart';
 import 'login.dart';
 import 'register.dart';

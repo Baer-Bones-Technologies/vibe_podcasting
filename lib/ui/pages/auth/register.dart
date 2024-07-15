@@ -3,21 +3,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../providers/auth_provider.dart';
+import '../../../di/providers/auth_provider.dart';
 import '../templates/registration.dart';
 import 'auth_screen.dart';
 import 'login.dart';
 import 'user_creation.dart';
 
 class RegisterScreen extends ConsumerWidget {
-  RegisterScreen({super.key});
+  RegisterScreen({super.key, required this.onEmailSubmitted, required this.onPasswordSubmitted, required this.onVerifyPasswordChanged});
+
+
 
   static const String routeLocation = '${AuthScreen.routeLocation}/register';
   static const String routeName = 'Register';
 
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
+  final Function(String) onEmailSubmitted;
+  final Function(String) onPasswordSubmitted;
+  final Function(String) onVerifyPasswordChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -53,20 +59,21 @@ class RegisterScreen extends ConsumerWidget {
               SizedBox(
                 width: double.infinity,
                 child: TextField(
-                  controller: emailController,
+                  controller: _emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
+                  onSubmitted: onEmailSubmitted,
                 ),
               ),
               const SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,
                 child: TextField(
-                  controller: passwordController,
+                  controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Password',
@@ -74,6 +81,7 @@ class RegisterScreen extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
+                  onSubmitted: onPasswordSubmitted,
                 ),
               ),
               const SizedBox(
@@ -82,7 +90,7 @@ class RegisterScreen extends ConsumerWidget {
               SizedBox(
                 width: double.infinity,
                 child: TextField(
-                  controller: confirmPasswordController,
+                  controller: _confirmPasswordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Confirm Password',
@@ -92,6 +100,7 @@ class RegisterScreen extends ConsumerWidget {
                       ),
                     ),
                   ),
+                  onChanged: onVerifyPasswordChanged,
                 ),
               ),
               const SizedBox(
@@ -101,9 +110,9 @@ class RegisterScreen extends ConsumerWidget {
                 onPressed: () async {
                   try {
                     await authController.signUpWithEmailAndPassword(
-                      emailController.text,
-                      passwordController.text,
-                      confirmPasswordController.text,
+                      _emailController.text,
+                      _passwordController.text,
+                      _confirmPasswordController.text,
                     ).then((value) => context.mounted && value != null ?
                       context.push(
                         UserCreationScreen.routeLocation,
