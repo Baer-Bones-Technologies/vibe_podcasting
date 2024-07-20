@@ -82,8 +82,8 @@ jobs:
       - name: Set Up Flutter
         run: flutter doctor
       - run: flutter pub get
-      - name: Create iOS Artifact
-        run: flutter build ios --debug
+     # - name: Create iOS Artifact
+     #   run: flutter build ios --debug
       - name: Finalize
         run: echo "All done!"
   finalize:
