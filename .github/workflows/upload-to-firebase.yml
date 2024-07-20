@@ -15,7 +15,7 @@ jobs:
 
   upload_to_firebase:
     name: Upload Android Artifact
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     env:
       PR_NUMBER_AND_MESSAGE: ${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}
       FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
