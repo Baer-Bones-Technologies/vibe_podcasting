@@ -46,7 +46,8 @@ jobs:
       FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
     steps:
       - name: Set Up Google Services
-        run: echo "$GOOGLE_SERVICES_JSON" > android/app/google-services.json
+        run: touch android/google-services.json
+      - run: echo "$GOOGLE_SERVICES_JSON" > android/google-services.json
       - name: Set Up Firebase
         run: echo "$FIREBASE_OPTIONS" > app/lib/firebase_options.dart
       - run: flutter doctor
