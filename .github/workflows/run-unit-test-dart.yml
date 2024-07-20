@@ -5,6 +5,8 @@
 name: Dart
 
 on:
+  push:
+    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
@@ -12,8 +14,8 @@ permissions: read-all
 
 jobs:
 
-  config:
-    name: Configure Environment
+  build_and_test:
+    name: Build and Test
     runs-on: ubuntu-latest
     env:
       PR_NUMBER_AND_MESSAGE: ${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}

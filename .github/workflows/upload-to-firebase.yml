@@ -13,95 +13,28 @@ permissions: write-all
 
 jobs:
 
-  config:
-    name: Configure Environment
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'zulu'
-          java-version: '11'
-
-        env:
-          PR_NUMBER_AND_MESSAGE: ${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}
-          FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
-          FIREBASE_APP_ID_IOS: ${{ secrets.FIREBASE_APP_ID_IOS }}
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-
-  setup_flutter:
-    name: Setup Flutter
-    needs: config
-    runs-on: ubuntu-latest
-    env:
-      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
-      FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
-    steps:
-      - name: Test in Workspace
-        run: ls $GITHUB_WORKSPACE
-      - name: Set Up Firebase
-        run: echo "$FIREBASE_OPTIONS" > $GITHUB_WORKSPACE/lib/config/firebase_options.dart
-      - run: flutter doctor
-      - run: flutter pub get
-
-  run_tests:
-    name: Run Unit Tests
-    needs: setup_flutter
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run Tests
-        run: flutter test
-
-  build_android:
-    name: Build Android Artifact
-    needs: run_tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create Android Artifact
-        run: flutter build apk --debug
-
-  build_ios:
-    name: Build iOS Artifact
-    needs: run_tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create iOS Artifact
-        run: flutter build ios --debug
-
-  upload_android:
+  upload_to_firebase:
     name: Upload Android Artifact
-    needs: build_android
     runs-on: ubuntu-latest
     env:
       PR_NUMBER_AND_MESSAGE: ${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}
       FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
-      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-    steps:
-      - uses: hasretsariyer/firebase-app-distribution-action@v1
-        with:
-          appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
-          token: ${{ secrets.FIREBASE_TOKEN }}
-          app_file: build/app/outputs/flutter-apk/app-debug.apk
-          release_notes: ${{ env.PR_NUMBER_AND_MESSAGE }}
-
-  upload_ios:
-    name: Upload iOS Artifact
-    needs: build_ios
-    runs-on: macos-latest
-    env:
-      PR_NUMBER_AND_MESSAGE: ${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}
       FIREBASE_APP_ID_IOS: ${{ secrets.FIREBASE_APP_ID_IOS }}
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
     steps:
-      - uses: hasretsariyer/firebase-app-distribution-action@v1
-        with:
-          appId: ${{ secrets.FIREBASE_APP_ID_IOS }}
-          token: ${{ secrets.FIREBASE_TOKEN }}
-          app_file: build/ios/iphoneos/Runner.app
-          release_notes: ${{ env.PR_NUMBER_AND_MESSAGE }}
+            - uses: hasretsariyer/firebase-app-distribution-action@v1
+              with:
+                appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+                token: ${{ secrets.FIREBASE_TOKEN }}
+                app_file: build/app/outputs/flutter-apk/app-debug.apk
+                release_notes: ${{ env.PR_NUMBER_AND_MESSAGE }}
+            - uses: hasretsariyer/firebase-app-distribution-action@v1
+              with:
+                appId: ${{ secrets.FIREBASE_APP_ID_IOS }}
+                token: ${{ secrets.FIREBASE_TOKEN }}
+                app_file: build/ios/iphoneos/Runner.app
+                release_notes: ${{ env.PR_NUMBER_AND_MESSAGE }}
+
   finalize:
         name: Finalize
         needs: [ upload_android, upload_ios ]
