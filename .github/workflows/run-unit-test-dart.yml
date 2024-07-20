@@ -55,7 +55,7 @@ jobs:
 
   run_tests:
       name: Run Unit Tests
-      needs: config
+      needs: setup_flutter
       runs-on: ubuntu-latest
       steps:
         - name: Run Tests
@@ -63,7 +63,7 @@ jobs:
 
   build_android:
     name: Build Android Artifact
-    needs: config
+    needs: run_tests
     runs-on: ubuntu-latest
     steps:
       - name: Create Android Artifact
@@ -71,7 +71,7 @@ jobs:
 
   build_ios:
     name: Build iOS Artifact
-    needs: config
+    needs: run_tests
     runs-on: ubuntu-latest
     steps:
       - name: Create iOS Artifact
@@ -79,7 +79,7 @@ jobs:
 
   upload_android:
     name: Upload Android Artifact
-    needs: config
+    needs: build_android
     runs-on: ubuntu-latest
     steps:
         - uses: hasretsariyer/firebase-app-distribution-action@v1
@@ -91,7 +91,7 @@ jobs:
 
   upload_ios:
       name: Upload iOS Artifact
-      needs: config
+      needs: build_ios
       runs-on: macos-latest
       steps:
         - uses: hasretsariyer/firebase-app-distribution-action@v1
