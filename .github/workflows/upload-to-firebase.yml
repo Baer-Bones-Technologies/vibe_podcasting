@@ -16,6 +16,9 @@ jobs:
   config:
     name: Configure Environment
     runs-on: ubuntu-latest
+    defaults:
+        run:
+            working-directory: ./vibe_podcasting
     steps:
       - uses: actions/checkout@v3
         with:
@@ -106,7 +109,6 @@ jobs:
           token: ${{ secrets.FIREBASE_TOKEN }}
           app_file: build/ios/iphoneos/Runner.app
           release_notes: ${{ env.PR_NUMBER_AND_MESSAGE }}
-
   finalize:
         name: Finalize
         needs: [ upload_android, upload_ios ]
