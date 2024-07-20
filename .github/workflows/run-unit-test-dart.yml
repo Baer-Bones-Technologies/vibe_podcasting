@@ -36,10 +36,8 @@ jobs:
               with:
                 distribution: 'zulu'
                 java-version: '11'
-            - name: Set Up Firebase
-              run: echo "$FIREBASE_OPTIONS" > ./lib/config/firebase_options.dart
-            - run: echo "$FIREBASE_OPTIONS"
-            - run: flutter doctor
+            - name: Set Up Flutter
+              run: flutter doctor
             - run: flutter pub get
             - name: Run Unit Tests
               run: flutter test
