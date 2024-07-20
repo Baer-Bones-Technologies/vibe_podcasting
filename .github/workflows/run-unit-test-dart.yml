@@ -20,6 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          repository: 'Baer-Bones-Technologies/vibe_podcasting'
+          ref: 'master'
+          token: ${{ secrets.SHH_TOKEN }}
       - uses: subosito/flutter-action@v2
         with:
             channel: 'stable'
