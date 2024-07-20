@@ -46,6 +46,8 @@ jobs:
       FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
       WORKSPACE: /home/runner/work/vibe_podcasting/vibe_podcasting
     steps:
+      - name: Move to Workspace
+        run: cd $WORKSPACE
       - name: Set Up Firebase
         run: echo "$FIREBASE_OPTIONS" > $WORKSPACE/lib/firebase_options.dart
       - run: flutter doctor
