@@ -1,0 +1,49 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+name: Dart
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+permissions: read-all
+
+jobs:
+
+  build_and_test:
+    name: Build and Test
+    runs-on: macos-latest
+    env:
+      PR_NUMBER_AND_MESSAGE: ${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}
+      FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+      FIREBASE_APP_ID_IOS: ${{ secrets.FIREBASE_APP_ID_IOS }}
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+      FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+    steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+              with:
+                  path: ${{ github.workspace }}
+            - uses: subosito/flutter-action@v2
+              with:
+                channel: 'stable'
+            - uses: actions/setup-java@v2
+              with:
+                distribution: 'zulu'
+                java-version: '11'
+            - name: Set Up Flutter
+              run: flutter doctor
+            - run: flutter pub get
+            - name: Run Unit Tests
+              run: flutter test
+            - name: Create Android Artifact
+              run: flutter build apk --debug
+            - name: Create iOS Artifact
+              run: flutter build ios --debug
+            - name: Finalize
+              run: echo "All done!"
