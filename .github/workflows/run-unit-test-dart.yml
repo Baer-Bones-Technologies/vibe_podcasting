@@ -11,32 +11,59 @@ on:
   pull_request:
     branches: [ "master" ]
 
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
+      - uses: actions/java@v2
+        with:
+            distribution: 'zulu'
+            java-version: '11'
+        env:
+            GOOGLE_SERVICES_JSON: ${{ secrets.debug.GOOGLE_SERVICES_JSON }}
+            PR_NUMBER_AND_MESSAGE: ${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}
+            FIREBASE_OPTIONS: ${{ secrets.debug.FIREBASE_OPTIONS }}
+            FIREBASE_APP_ID_ANDROID: ${{ secrets.debug.FIREBASE_APP_ID_ANDROID }}
+            FIREBASE_APP_ID_IOS: ${{ secrets.debug.FIREBASE_APP_ID_IOS }}
+            FIREBASE_TOKEN: ${{ secrets.debug.FIREBASE_TOKEN }}
 
-      # Note: This workflow uses the latest stable version of the Dart SDK.
-      # You can specify other versions if desired, see documentation here:
-      # https://github.com/dart-lang/setup-dart/blob/main/README.md
-      # - uses: dart-lang/setup-dart@v1
-      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+        run: echo "$GOOGLE_SERVICES_JSON" > android/app/google-services.json
 
-      - name: Install dependencies
-        run: dart pub get
+      - name: Set Up Firebase
+        run: echo "$FIREBASE_OPTIONS" > app/lib/firebase_options.dart
 
-      # Uncomment this step to verify the use of 'dart format' on each commit.
-      # - name: Verify formatting
-      #   run: dart format --output=none --set-exit-if-changed .
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - run: flutter doctor
+      - run: flutter pub get
 
-      # Consider passing '--fatal-infos' for slightly stricter analysis.
-      - name: Analyze project source
-        run: dart analyze
+      - name: Run Tests
+        run: flutter test
 
-      # Your project will need to have tests in test/ and a dependency on
-      # package:test for this step to succeed. Note that Flutter projects will
-      # want to change this to 'flutter test'.
-      - name: Run tests
-        run: dart test
+
+      - name: Create Android Artifact
+        run: flutter build apk --debug
+
+      - name: Create iOS Artifact
+        run: flutter build ios --debug
+
+      - name: Upload Android Artifact
+        uses: hasretsariyer/firebase-app-distribution-action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          app_file: build/app/outputs/flutter-apk/app-debug.apk
+          release_notes: ${{ env.PR_NUMBER_AND_MESSAGE }}
+
+      - name: Upload iOS Artifact
+        uses: hasretsariyer/firebase-app-distribution-action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_IOS }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          app_file: build/ios/iphoneos/Runner.app
+          release_notes: ${{ env.PR_NUMBER_AND_MESSAGE }}
