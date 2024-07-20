@@ -42,7 +42,7 @@ jobs:
       FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
     steps:
       - name: Test in Workspace
-        run: ls $GITHUB_WORKSPACE
+        run: ls $GITHUB_WORKSPACE/lib
       - name: Set Up Firebase
         run: echo "$FIREBASE_OPTIONS" > $GITHUB_WORKSPACE/lib/config/firebase_options.dart
       - run: flutter doctor
