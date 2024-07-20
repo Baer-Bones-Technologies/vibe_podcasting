@@ -40,8 +40,8 @@ jobs:
       GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
       FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
     steps:
-      - name: Move to Workspace
-        run: cd $GITHUB_WORKSPACE
+      - name: Test in Workspace
+        run: ls $GITHUB_WORKSPACE
       - name: Set Up Firebase
         run: echo "$FIREBASE_OPTIONS" > $GITHUB_WORKSPACE/lib/config/firebase_options.dart
       - run: flutter doctor
