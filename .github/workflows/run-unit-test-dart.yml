@@ -40,35 +40,11 @@ jobs:
               run: echo "$FIREBASE_OPTIONS" > ./lib/config/firebase_options.dart
             - run: flutter doctor
             - run: flutter pub get
-
-  run_tests:
-    name: Run Unit Tests
-    needs: config
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run Tests
-        run: flutter test
-
-  build_android:
-    name: Build Android Artifact
-    needs: run_tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create Android Artifact
-        run: flutter build apk --debug
-
-  build_ios:
-    name: Build iOS Artifact
-    needs: run_tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create iOS Artifact
-        run: flutter build ios --debug
-
-  finalize:
-    name: Finalize
-    needs: [ build_android, build_ios ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Finalize
-        run: echo "All done!"
+            - name: Run Unit Tests
+              run: flutter test
+            - name: Create Android Artifact
+              run: flutter build apk --debug
+            - name: Create iOS Artifact
+              run: flutter build ios --debug
+            - name: Finalize
+              run: echo "All done!"
