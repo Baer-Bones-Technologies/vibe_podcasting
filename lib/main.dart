@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vibe_podcasting/constants/strings.dart';
 
 import 'config/initialize_application.dart';
 import 'di/providers/theme_provider.dart';
@@ -20,7 +21,7 @@ void main() async {
     );
   }, (error, stackTrace) {
     if (kDebugMode) {
-      print('runZonedGuarded: Caught error in my root zone.');
+      print(runGuardedError);
     }
   });
 }
@@ -37,7 +38,7 @@ class AppRunner extends ConsumerWidget{
       routerDelegate: router.routerDelegate,
       routeInformationParser: router.routeInformationParser,
       routeInformationProvider: router.routeInformationProvider,
-      title: 'Vibe Podcasting',
+      title: appName,
       theme: theme,
     );
   }

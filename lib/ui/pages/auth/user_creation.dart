@@ -76,6 +76,11 @@ class _UserCreationScreenState extends ConsumerState<UserCreationScreen> {
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Theme.of(context).colorScheme.onSurface,
                     ),
+                onChanged: (value) {
+                  if (value.isNotEmpty) {
+                    usernameController.text = value;
+                  }
+                },
               ),
             ),
             const SizedBox(height: 16),
@@ -83,10 +88,8 @@ class _UserCreationScreenState extends ConsumerState<UserCreationScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Checkbox(
-                    value: over13,
+                    value: ref.read(over13Provider.notifier).state,
                     onChanged: (value) {
-                      //ignore: avoid_print
-                      print(value);
                       ref.read(over13Provider.notifier).state = value ?? false;
                     }),
                 const Text('I am over 13 years old'),

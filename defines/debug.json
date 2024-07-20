@@ -1,0 +1,36 @@
+{
+  "configs": {
+    "android": {
+      "apiKey": "AIzaSyBBYvYCnY9Giq_3zEwdVrrxdblUp6bV_1U",
+      "appId": "1:1097426582598:android:689edafb71a9f2fd98de47",
+      "messagingSenderId": "1097426582598",
+      "projectId": "vibe-podcasting",
+      "storageBucket": "vibe-podcasting.appspot.com"
+    },
+    "ios": {
+      "apiKey": "AIzaSyB1D15MvwKVZJl3ggWMIi8I62Ix4jVq5vg",
+      "appId": "1:1097426582598:ios:6e2ee0dd19d72ab398de47",
+      "messagingSenderId": "1097426582598",
+      "projectId": "vibe-podcasting",
+      "storageBucket": "vibe-podcasting.appspot.com",
+      "iosBundleId": "com.baerhous.vibePodcasting"
+    },
+    "macos": {
+      "apiKey": "AIzaSyB1D15MvwKVZJl3ggWMIi8I62Ix4jVq5vg",
+      "appId": "1:1097426582598:ios:6e2ee0dd19d72ab398de47",
+      "messagingSenderId": "1097426582598",
+      "projectId": "vibe-podcasting",
+      "storageBucket": "vibe-podcasting.appspot.com",
+      "iosBundleId": "com.baerhous.vibePodcasting"
+    },
+    "web": {
+      "apiKey": "AIzaSyCh_CE7rFud_pss4YR-G7R7MjSbrnXOtoM",
+      "appId": "1:1097426582598:web:554bc5f3c05251b598de47",
+      "messagingSenderId": "1097426582598",
+      "projectId": "vibe-podcasting",
+      "authDomain": "vibe-podcasting.firebaseapp.com",
+      "storageBucket": "vibe-podcasting.appspot.com",
+      "measurementId": "G-20PTNJ497S"
+    }
+  }
+}
