@@ -16,14 +16,8 @@ jobs:
   config:
     name: Configure Environment
     runs-on: ubuntu-latest
-    defaults:
-        run:
-            working-directory: ./vibe_podcasting
     steps:
-      - uses: actions/checkout@v3
-        with:
-          repository: 'Baer-Bones-Technologies/vibe_podcasting'
-          ref: 'master'
+      - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
